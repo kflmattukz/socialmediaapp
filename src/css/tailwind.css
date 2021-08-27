@@ -4,9 +4,13 @@
 
 @layer components {
     .input-field {
-      @apply px-4 py-2 rounded shadow text-xl outline-none focus:ring ring-blue-600 transition ease-in;
+      @apply px-4 py-2 rounded shadow text-gray-800 text-lg outline-none focus:ring ring-blue-600 transition ease-in;
+    }
+    .input-login {
+      @apply px-2 rounded shadow text-gray-800 text-base outline-none focus:ring ring-blue-600 transition ease-in;
     }
     .btn {
         @apply px-4 py-2 rounded shadow text-xl outline-none focus:ring ring-blue-600;
     }
+
   }

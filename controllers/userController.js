@@ -1,7 +1,9 @@
 const User = require('../models/User');
-// exports.login = function () {
-
-// }
+exports.login = function (req,res) {
+    if (req.body.username === 'kflmattukz' && req.body.password === '12345678') {
+        res.send('you loggin successfully');
+    }
+}
 
 exports.register = function ( req,res ) {
     const user = new User();

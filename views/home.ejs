@@ -7,11 +7,11 @@
     <link rel="stylesheet" href="./css/tailwind.css">
     <title>Social App</title>
 </head>
-<body class="bg-gray-100" style="font-family: 'Roboto' , 'Sf Dispay' , 'Inter' , 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+<body class="bg-gray-100" style="font-family: 'Inter', 'Roboto' , 'Sf Dispay' , 'Inter' , 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
     <div class="flex flex-col h-screen">
         <!-- HEADER -->
         <header>
-            <nav class="bg-gray-800 text-gray-100 flex justify-between shadow-lg py-3 items-center">
+            <nav class="bg-gray-800 text-gray-100 flex justify-between shadow-lg py-2 items-center">
                 <!-- LOGO -->
                 <div class="flex font-light ml-5 text-3xl items-center">
                     <span class="mr-3">
@@ -23,12 +23,16 @@
                 </div>
                 <!-- LOGIN -->
                 <div class="flex order-last font-regular text-md mr-10">
-                    <span class="mr-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
-                          </svg>
-                    </span>
-                    <a href="/login">Login</a>
+                    <form action="/login" method="post" class="flex gap-3 mr-5">
+                        <input class="input-login" type="text" name="username" id="username" placeholder="Username/email" autocomplete="off">
+                        <input class="input-login" type="password" name="password" id="password" placeholder="Password" autocomplete="off">
+                        <button type="submit" class="flex">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+                            </svg>
+                            <div>Login</div> 
+                        </button>
+                    </form>
                 </div>
             </nav>
         </header>
