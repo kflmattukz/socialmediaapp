@@ -1,0 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .input-field {
+      @apply px-4 py-2 rounded shadow text-xl outline-none focus:ring ring-blue-600 transition ease-in;
+    }
+    .btn {
+        @apply px-4 py-2 rounded shadow text-xl outline-none focus:ring ring-blue-600;
+    }
+  }
