@@ -45,7 +45,7 @@ User.prototype.register = function () {
     this.validate();
 
     if ( !this.errors.length ) {
-        console.log('hello is saving');
+        // console.log('hello is saving');
         userCollection.insertOne(this.data);
     }
 }
