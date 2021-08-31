@@ -1,5 +1,5 @@
 const validator = require('validator');
-const db = require('../db');
+const userCollection = require('../db').collection('users');
 
 const User = function (data) {
     this.data = data;
@@ -29,12 +29,24 @@ User.prototype.validate = function () {
     if (this.data.password.length > 30 ) { this.errors.push('Username maximun 30 characters') }
 }
 
+User.prototype.login = function () {
+    this.cleanUp();
+    userCollection.findOne({username: this.data.username} , (err, atmpUser) => {
+        if (atmpUser && atmpUser.password == this.data.password)    {
+            console.log('login succes ,welcome');
+        } else {
+            console.log('username/password is wrong ,please try again later');
+        }
+    });
+}
+
 User.prototype.register = function () {
     this.cleanUp();
     this.validate();
 
-    if ( !this.data.length ) {
-        db.collection('users').insertOne(this.data);
+    if ( !this.errors.length ) {
+        console.log('hello is saving');
+        userCollection.insertOne(this.data);
     }
 }
 
