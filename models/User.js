@@ -1,5 +1,6 @@
 const validator = require('validator');
 const userCollection = require('../db').collection('users');
+const bcrypt = require('bcryptjs');
 
 const User = function (data) {
     this.data = data;
@@ -29,15 +30,14 @@ User.prototype.validate = function () {
     if (this.data.password.length > 30 ) { this.errors.push('Username maximun 30 characters') }
 }
 
-User.prototype.login = function () {
+User.prototype.login = async function () {
     this.cleanUp();
-    userCollection.findOne({username: this.data.username} , (err, atmpUser) => {
-        if (atmpUser && atmpUser.password == this.data.password)    {
-            console.log('login succes ,welcome');
-        } else {
-            console.log('username/password is wrong ,please try again later');
-        }
-    });
+    const attmpUser = await userCollection.findOne({username: this.data.username});
+    if (attmpUser && attmpUser.password == this.data.password) {
+        return 'login success';
+    } else {
+        return 'username/password is wrong';
+    }
 }
 
 User.prototype.register = function () {
@@ -45,7 +45,9 @@ User.prototype.register = function () {
     this.validate();
 
     if ( !this.errors.length ) {
-        // console.log('hello is saving');
+        //HASH user password
+        let salt = bcrypt.genSaltSync(10);
+        this.data.password = bcrypt.hashSync(this.data.password , salt);
         userCollection.insertOne(this.data);
     }
 }
