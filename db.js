@@ -1,8 +1,6 @@
 const dotenv = require('dotenv');
 dotenv.config();
 const { MongoClient, MongoNetworkError } = require('mongodb');
-
-// const connString = 'mongodb+srv://kflmattuk:doraemon08@cluster0.rjhl1.mongodb.net/Socialapp?retryWrites=true&w=majority';
 const dbname = 'Socialapp';
 
 MongoClient.connect(process.env.CONNSTRING , { useUnifiedTopology: true }).then(client => {
