@@ -19,13 +19,13 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                           </svg>
                     </span>
-                     Social App
+                     <a href="/">Social App</a> 
                 </div>
                 <!-- LOGIN -->
                 <div class="flex order-last font-regular text-md mr-10">
-                    <form action="/login" method="post" class="flex gap-3 mr-5">
+                    <form action="/login" method="post" class="flex gap-3 mr-5 items-center">
                         <input class="input-login" type="text" name="username" id="username" placeholder="Username/email" autocomplete="off">
-                        <input class="input-login" type="password" name="password" id="password" placeholder="Password" autocomplete="off">
+                        <input class="input-login " type="password" name="password" id="password" placeholder="Password" autocomplete="off">
                         <button type="submit" class="flex">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
@@ -49,21 +49,21 @@
                     </div>
                 </div>
                 <!-- REGISTER -->
-                <div class="w-3/6 my-auto p-10 bg-gray-800 border border-gray-300 rounded-md shadow-lg">
+                <div class="w-3/6 my-auto p-10 border border-opacity-25 border-gray-500 rounded-md shadow-lg">
                     <form action="/register" method="POST">
                         <div class="flex flex-col gap-3 w-full">
                         <input class="input-field" type="text" name="username" placeholder="Username" required autocomplete="off">
                         <input class="input-field" type="email" name="email" placeholder="you@email.com" required autocomplete="off">
                         <input class="input-field" type="password" name="password" placeholder="Your strong Password" required autocomplete="off">
-                        <button class="btn bg-green-600 hover:bg-green-500 transition ease-in text-gray-100 shadow" type="submit">Register</button>
+                        <button class="btn text-base font-semibold bg-green-600 hover:bg-green-500 transition ease-in text-white shadow" type="submit">Register</button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
     
-        <footer class="float-clear text-center text-gray-500 text-md p-5">
-            &copy; Copyright <span class="font-light text-gray-600">kflmattukz@nosferatu</span> 2021 vegapunk.inc
+        <footer class="float-clear text-center text-gray-500 text-sm p-5">
+            &copy; Copyright <span class="font-light text-gray-600">kflmattukz@nosferatu</span> 2021 vegapunk.inc , All right reserved.
         </footer>
     </div>
 </body>
