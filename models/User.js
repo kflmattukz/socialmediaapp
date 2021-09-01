@@ -36,7 +36,7 @@ User.prototype.login = async function () {
     if (attmpUser && bcrypt.compareSync(this.data.password , attmpUser.password)) {
         return attmpUser;
     } else {
-        return 'username/password is wrong';
+        return 'invalid username/password';
     }
 }
 

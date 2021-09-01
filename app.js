@@ -1,6 +1,7 @@
 const express = require('express');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
+const flash = require('connect-flash');
 
 const sessionOptions = session({
     secret: 'SherlockHolmes',
@@ -18,6 +19,7 @@ const router = require('./router');
 // const PORT = 3000;
 
 app.use(sessionOptions);
+app.use(flash());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use('/' , router);
