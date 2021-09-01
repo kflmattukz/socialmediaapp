@@ -5,8 +5,8 @@ dotenv.config();
 const dbname = 'Socialapp';
 
 MongoClient.connect(process.env.CONNSTRING , { useUnifiedTopology: true }).then(client => {
-    const db = client.db(dbname);
-    module.exports  = db;
+    // const db = client.db(dbname);
+    module.exports  = client;
     const app = require('./app');
     app.listen(process.env.PORT , function () {
         console.log(`listen to http://localhost:${ process.env.PORT }`);

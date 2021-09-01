@@ -1,13 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./css/tailwind.css">
-    <title>Social App</title>
-</head>
-<body class="bg-gray-100" style="font-family: 'Inter', 'Roboto' , 'Sf Dispay' , 'Inter' , 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+<%- include('template/head.ejs') %>
     <div class="flex flex-col h-screen">
         <!-- HEADER -->
         <header>
@@ -52,19 +43,16 @@
                 <div class="w-3/6 my-auto p-10 border border-opacity-25 border-gray-500 rounded-md shadow-lg">
                     <form action="/register" method="POST">
                         <div class="flex flex-col gap-3 w-full">
-                        <input class="input-field" type="text" name="username" placeholder="Username" required autocomplete="off">
-                        <input class="input-field" type="email" name="email" placeholder="you@email.com" required autocomplete="off">
-                        <input class="input-field" type="password" name="password" placeholder="Your strong Password" required autocomplete="off">
+                            <label for="username" class="text-gray-600 font-medium text-sm">Username</label>
+                            <input class="input-field" type="text" name="username" placeholder="Username" required autocomplete="off">
+                            <label for="email" class="text-gray-600 font-medium text-sm">Email</label>
+                            <input class="input-field" type="email" name="email" placeholder="you@email.com" required autocomplete="off">
+                            <label for="password" class="text-gray-600 font-medium text-sm">Password</label>
+                            <input class="input-field" type="password" name="password" placeholder="Your strong Password" required autocomplete="off">
                         <button class="btn text-base font-semibold bg-green-600 hover:bg-green-500 transition ease-in text-white shadow" type="submit">Register</button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
-    
-        <footer class="float-clear text-center text-gray-500 text-sm p-5">
-            &copy; Copyright <span class="font-light text-gray-600">kflmattukz@nosferatu</span> 2021 vegapunk.inc , All right reserved.
-        </footer>
-    </div>
-</body>
-</html>
+<%- include('template/footer.ejs') %>

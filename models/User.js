@@ -1,5 +1,5 @@
 const validator = require('validator');
-const userCollection = require('../db').collection('users');
+const userCollection = require('../db').db('Socialapp').collection('users');
 const bcrypt = require('bcryptjs');
 
 const User = function (data) {
@@ -33,8 +33,8 @@ User.prototype.validate = function () {
 User.prototype.login = async function () {
     this.cleanUp();
     const attmpUser = await userCollection.findOne({username: this.data.username});
-    if (attmpUser && attmpUser.password == this.data.password) {
-        return 'login success';
+    if (attmpUser && bcrypt.compareSync(this.data.password , attmpUser.password)) {
+        return attmpUser;
     } else {
         return 'username/password is wrong';
     }

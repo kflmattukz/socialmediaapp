@@ -1,9 +1,23 @@
 const express = require('express');
+const session = require('express-session');
+const MongoStore = require('connect-mongo');
+
+const sessionOptions = session({
+    secret: 'SherlockHolmes',
+    store: new MongoStore({ client: require('./db')}),
+    resave: false,
+    saveUninitialized:false,
+    cookie: {
+        maxAge: 1000 * 60 * 60 * 24,
+        httpOnly: true
+    }
+});
 
 const app = express();
 const router = require('./router');
 // const PORT = 3000;
 
+app.use(sessionOptions);
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use('/' , router);

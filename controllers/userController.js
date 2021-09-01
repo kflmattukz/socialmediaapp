@@ -2,10 +2,10 @@ const User = require('../models/User');
 
 exports.login = async function (req,res) {
    let user = new User(req.body);
-
     const result = await user.login();
     if (result) {
-        res.send(result);
+        req.session.username = user.data.username;
+        res.redirect('/');   
     } else {
         res.send(result);
     }
@@ -18,5 +18,13 @@ exports.register = function ( req,res ) {
         res.send(user.errors);
     } else {
         res.send('your registration complete');
+    }
+}
+
+exports.home = function (req,res) {
+    if (req.session.user) {
+        res.render('home-dashboard' , { username: req.session.username });
+    } else {
+        res.render('home');
     }
 }
