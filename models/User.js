@@ -40,6 +40,10 @@ User.prototype.login = async function () {
     }
 }
 
+User.prototype.logout = function () {
+    
+}
+
 User.prototype.register = function () {
     this.cleanUp();
     this.validate();
