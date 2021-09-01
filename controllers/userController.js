@@ -22,7 +22,7 @@ exports.register = function ( req,res ) {
 }
 
 exports.home = function (req,res) {
-    if (req.session.user) {
+    if (req.session.username) {
         res.render('home-dashboard' , { username: req.session.username });
     } else {
         res.render('home');

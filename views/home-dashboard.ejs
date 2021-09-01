@@ -1,11 +1,90 @@
 <%- include('template/head.ejs') %>
 
-<header>
-    
-</header>
+<div class="flex flex-col h-screen">
+<!-- HEADER -->
+    <header>
+        <nav class="bg-gray-800 text-gray-100 flex justify-between shadow-lg py-2 items-center">
+            <!-- LOGO -->
+            <div class="flex font-light ml-5 text-3xl items-center">
+                <span class="mr-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                      </svg>
+                </span>
+                 <a href="/" class="text-base font-semibold tracking-wide">Social App</a> 
+            </div>
+            <!-- LOGIN -->
+            <div class="flex gap-3 order-last font-regular text-md mr-10">
+                <!-- USER IMAGE -->
+                <button class="flex items-center">
+                    <img class="rounded-full outline-none focus:ring ring-blue-500 border-2 border-gray-600 h-7 w-7" src="https://avatar.oxro.io/avatar.svg?name=<%= username %>&background=f39c12&length=1" alt="profile picture">
+                    <span class="ml-2 font-semibold tracking-wide"><%= username %></span>
+                </button>
+                <!-- CHAT BUTTON -->
+                <button class="text-gray-300 hover:text-gray-100">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                      </svg>
+                </button>
+                <!-- POST BUTTON -->
+                <button class="text-gray-300 hover:text-gray-100">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+                      </svg>
+                </button>
+                <!-- MENU BUTTON -->
+                <button class=" text-gray-300 hover:text-gray-100 focus:text-white relative" id="dropdown-menu">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                </button>
+                <!-- DROPDOWN MENU -->
+                <div class="absolute hidden border border-gray-700 border-opacity-30 rounded top-10 right-1 mt-3 w-48 bg-white text-gray-600 shadow-xl z-20" id="dropdown">
+                    <a href="/profile" class="block px-4 py-2 text-sm capitalize text-gray-700 hover:bg-gray-700 hover:text-white">
+                        <div class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2" />
+                            </svg>
+                            <span>&nbsp Profile</span>
+                        </div>
+                    </a>
+                    <a href="/logout" class="block px-4 py-2 text-sm capitalize text-gray-700 hover:bg-gray-700 hover:text-white">
+                        <div class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                              </svg>
+                            <span>&nbsp Logout</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
 
-<div>
-    Welcome <%= username %>
+    <!-- MAIN CONTENT -->
+    <div class="w-2/4 h-full flex mt-5 mx-auto mb-auto items-center">
+        
+        <div class="text-gray-800">
+           <h3 class="text-3xl font-light">Welcome <strong class="font-semibold"><%= username %></strong> to Social App</h3> 
+           <p class="text-justify text-base py-3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus inventore debitis voluptatum vitae explicabo illo ducimus odit provident, asperiores quisquam sapiente facere! Iure, provident expedita culpa porro laudantium, perspiciatis ducimus vitae quibusdam saepe qui dolor nisi, architecto laboriosam aut sint nesciunt rem. Veniam itaque eum error debitis tempore. Saepe ratione quidem cupiditate? Reiciendis suscipit necessitatibus voluptatibus sit tempora! Enim, illum iste sequi corrupti qui vitae explicabo ad cumque, reprehenderit rem quod dolor! Aperiam earum animi dolor veniam, quos, vitae explicabo repellendus quibusdam excepturi culpa qui ad a alias perspiciatis saepe esse deserunt amet hic quis id maxime expedita. Ab, veritatis.</p>
+        </div>
+    </div>
+
 </div>
+
+    <!-- DROPDOWN TRIGGER -->
+  <script>
+      const dropdown = document.querySelector('#dropdown');
+      const dropdownMenu = document.querySelector('#dropdown-menu');
+      dropdownMenu.addEventListener('click' , () => {
+        dropdown.classList.toggle('hidden');
+        dropdown.classList.toggle('block');
+      });
+
+      dropdownMenu.addEventListener('blur' , () => {
+        dropdown.classList.toggle('hidden');
+        dropdown.classList.toggle('block');
+      });
+  </script>
 
 <%- include('template/footer.ejs') %>
