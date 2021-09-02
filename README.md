@@ -2,14 +2,14 @@
 ## learn express & tailwind css
 
 ### technology i use
-    - Express (Web Framework for Node.js)
-        - Express-session (manage Session on Express)
-    - EJS (Template Engine)
-    - Tailwind css (Css library A Utility First Framework)
-    - MongoDB (Dataase with JSON model data Support)
-        - MongoStore (save Session to MongoDB)
-    - flash connect-flash (manage Flash message)
-    - dotenv (manage .env file)
+    * Express (Web Framework for Node.js)
+        * Express-session (manage Session on Express)
+    * EJS (Template Engine)
+    * Tailwind css (Css library A Utility First Framework)
+    * MongoDB (Dataase with JSON model data Support)
+        * MongoStore (save Session to MongoDB)
+    * flash connect-flash (manage Flash message)
+    * dotenv (manage .env file)
 
 #### express
 ```npm
@@ -35,17 +35,17 @@ app.set('view engine', 'ejs');
 ```
 
 #### tailwindcss
-[tailwindcss css installation]('https://tailwindcss.com/docs/installation')
+[tailwindcss css installation](https://tailwindcss.com/docs/installation)
 
 
 #### mongoDB
- - create mongoDB account and create a database or install mondoDB localy 
- - install mongodb driver (you can install any driver you want)
+ * create mongoDB account and create a database or install mondoDB localy 
+ * install mongodb driver (you can install any driver you want)
 ```npm
 npm install mongodb
 ```
- - get Token connection from website or MongoDB App
- - if you make database from website make sure to add you IP address so you can connect to MondoDB database
+ * get Token connection from website or MongoDB App
+ * if you make database from website make sure to add you IP address so you can connect to MondoDB database
 ```javascript
 const { MongoClient } = require('mongodb');
 const connString = //your mongoDB token connection
