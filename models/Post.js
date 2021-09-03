@@ -1,4 +1,4 @@
-const postCollection = require('../db').db('Socialapp').collection('Post');
+const postCollection = require('../db').db('Socialapp').collection('post');
 
 const Post = function (data) {
     this.data = data;
@@ -10,8 +10,8 @@ Post.prototype.cleanUp = function () {
     if ( typeof(this.data.content) != 'string') { this.data.content = ''}
 
     this.data = {
-        title = this.data.title.trim(),
-        content = this.data.content.trim()
+        title: this.data.title.trim(),
+        content: this.data.content.trim()
     }
 }
 
@@ -21,17 +21,19 @@ Post.prototype.validate = function () {
 }
 
 Post.prototype.store = function () {
-    return new Promise = (resolve , reject) => {
+    return new Promise( (resolve , reject) => {
         this.cleanUp();
         this.validate();
 
         if ( !this.errors.length ) {
             postCollection.insertOne(this.data)
                 .then(() => {
-                    resolve()
+                    resolve();
                 }).catch(() => {
-                    reject('Please try again later')
-                })
+                    reject('Please try again later');
+            })
         }
-    }
+    });
 }
+
+module.exports = Post;

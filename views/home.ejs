@@ -51,17 +51,4 @@
             </div>
         </div>
 
-
-        <!-- SCRIPT FLASH  -->
-        <script>
-            const flash = document.querySelector('#flash');
-            const regFlash = document.getElementById('regflash');
-            setTimeout(() => {
-                if (flash) {
-                    flash.classList.toggle('hidden');
-                } else {
-                    regFlash.classList.toggle('hidden');
-                }
-            }, 1000 * 5)
-        </script>
 <%- include('template/footer.ejs') %>

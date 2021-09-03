@@ -1,4 +1,4 @@
-// const Post = require('../models/Post');
+const Post = require('../models/Post');
 
 exports.viewCreate = function (req,res) {
     res.render('create-post');
@@ -8,10 +8,10 @@ exports.viewCreate = function (req,res) {
 exports.create = function (req,res) {
     let post = new Post(req.body);
     post.store()
-        .then((result) => {
-            result
+        .then(() => {
+            res.send('post store completed')
         })
-        .cacth((err) => {
+        .catch((err) => {
             console.log(`Error ${ err }`);
         });
 }

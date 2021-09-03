@@ -2,6 +2,32 @@
 <footer class="float-clear text-center -mt-12 text-gray-500 text-sm p-3 border-t border-gray-400 border-opacity-60">
     &copy; Copyright <span class="font-light text-gray-600">kflmattukz@nosferatu</span> 2021 vegapunk.inc , All right reserved.
 </footer>
+
+<script>
+    const dropdown = document.querySelector('#dropdown');
+    const dropdownMenu = document.querySelector('#dropdown-menu');
+    dropdownMenu.addEventListener('click' , () => {
+      dropdown.classList.toggle('hidden');
+      // dropdown.classList.toggle('block');
+    });
+
+    // dropdownMenu.addEventListener('blur' , () => {
+    //   dropdown.classList.toggle('hidden');
+    //   // dropdown.classList.toggle('block');
+    // });
+
+    const flash = document.querySelector('#flash');
+    const regFlash = document.getElementById('regflash');
+    setTimeout(() => {
+        if (flash) {
+            flash.classList.toggle('hidden');
+        } else {
+            regFlash.classList.toggle('hidden');
+        }
+    }, 1000 * 5)
+
+</script>
+
 </div>
 </body>
 </html>
