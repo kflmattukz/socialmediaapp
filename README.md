@@ -1,16 +1,16 @@
 # Social Media App
 ## learn express & tailwind css
 
-### technology i use
-    * Express (Web Framework for Node.js)
-        * Express-session (manage Session on Express)
-    * EJS (Template Engine)
-    * Tailwind css (Css library A Utility First Framework)
-    * MongoDB (Dataase with JSON model data Support)
-        * MongoStore (save Session to MongoDB)
-    * flash connect-flash (manage Flash message)
-    * dotenv (manage .env file)
-
+### technology i use    
+* Express (Web Framework for Node.js)
+    * Express-session (manage Session on Express)
+* EJS (Template Engine)
+* Tailwind css (Css library A Utility First Framework)
+* MongoDB (Dataase with JSON model data Support)
+    * MongoStore (save Session to MongoDB)
+* flash connect-flash (manage Flash message)
+* dotenv (manage .env file)
+----
 #### express
 ```npm
 npm install express
@@ -21,7 +21,7 @@ const app = express();
 //LISTEN to PORT 3000
 app.listen(3000);
 ```
-
+----
 ### EJS
 ```npm
 npm install ejs
@@ -33,11 +33,11 @@ app.set('View' , __dirname+'/views');
 //Set view Engine to EJS
 app.set('view engine', 'ejs');
 ```
-
+----
 #### tailwindcss
 [tailwindcss css installation](https://tailwindcss.com/docs/installation)
 
-
+----
 #### mongoDB
  * create mongoDB account and create a database or install mondoDB localy 
  * install mongodb driver (you can install any driver you want)
@@ -55,7 +55,7 @@ const MongoClient.connect(connString , { useUnifiedTopology: true }).then(client
     console.log(`ERROR ${err}`)
 })
 ```
-
+----
 #### express session
 ```npm
 npm install express-session
@@ -80,7 +80,7 @@ const sessionOptions = session({
 
 app.use(sessionOptions);
 ```
-
+----
 #### Flash (connect-flash)
 ```npm
 npm install connect-flash
@@ -91,7 +91,7 @@ const flash = require('connect-flash');
 
 app.use(flash());
 ```
-
+----
 #### dotenv
 ```npm
 npm install dotenv
