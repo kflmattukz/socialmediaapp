@@ -4,7 +4,7 @@ const MongoStore = require('connect-mongo');
 const flash = require('connect-flash');
 
 const sessionOptions = session({
-    secret: 'SherlockHolmes',
+    secret: process.env.SECRET_KEY,
     store: new MongoStore({ client: require('./db')}),
     resave: false,
     saveUninitialized:false,
@@ -22,6 +22,13 @@ app.use(sessionOptions);
 app.use(flash());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+//save the data to locals
+app.use(function (req ,res , next) {
+    res.locals.user = req.session.user;
+    next();
+});
+
 app.use('/' , router);
 app.use(express.static('public'));
 

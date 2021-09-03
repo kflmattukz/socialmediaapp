@@ -1,0 +1,19 @@
+<%- include('template/head.ejs') %>
+
+    <div class="w-2/4 h-full flex mt-5 mx-auto mb-auto">
+        <form action="/create-post" method="POST" class="flex flex-col gap-3 w-full text-gray-700">
+            <div class="flex flex-col">
+                <label for="title" class="mb-2 font-semibold">Title</label>
+                <input type="text" name="title" id="title" class="rounded-lg shadow text-lg px-3 py-2 outline-none focus:ring ring-blue-500 ring-opacity-50 border border-gray-500 border-opacity-25">
+            </div>
+            <div class="flex flex-col">
+                <label for="content" class="mb-2 font-semibold">Content</label>
+                <textarea name="content" id="content" cols="30" rows="10" class="flex-auto rounded-lg shadow text-lg px-3 py-2 outline-none focus:ring ring-blue-500 ring-opacity-50 border border-gray-500 border-opacity-25"></textarea>
+            </div>
+            <div>
+                <button type="submit" class="px-10 py-2 bg-green-500 text-white shadow rounded-lg border border-green-600 font-semibold">Post</button>
+            </div>
+        </form>
+    </div>
+
+<%- include('template/footer.ejs') %>

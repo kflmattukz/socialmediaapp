@@ -4,8 +4,9 @@ exports.login = async function (req,res) {
     let user = new User(req.body);
     const result = await user.login();
     if (result.username) {
-        req.session.username = user.data.username;
-        req.session.isLogin = true;
+        req.session.user = {
+            username: user.data.username,
+        }
         req.session.save(function () {
             res.redirect('/');
         });
@@ -28,8 +29,10 @@ exports.register = function ( req,res ) {
     
     user.register()
         .then(() => {
-            req.session.username = user.data.username;
-            req.session.isLogin = true;
+            req.session.user = {
+                username: user.data.username,
+            }
+
             req.session.save(function () {
                 res.redirect('/');
             })
@@ -46,10 +49,21 @@ exports.register = function ( req,res ) {
     
 }
 
-exports.home = function (req,res) {
-    if (req.session.username) {
-        res.render('home-dashboard' , { isLogin: req.session.isLogin , username: req.session.username } );
+exports.isUserLogin = function (req,res,next) {
+    if (req.session.user) {
+        next()
     } else {
-        res.render('home' , { isLogin: false , errors: req.flash('errors') , regErrors: req.flash('regErrors') } );
+        req.flash('errors' , 'you must login to first');
+        req.session.save(() => {
+            res.redirect('/');
+        });
+    }
+}
+
+exports.home = function (req,res) {
+    if (req.session.user) {
+        res.render('home-dashboard');
+    } else {
+        res.render('home' , { errors: req.flash('errors') , regErrors: req.flash('regErrors')});
     }
 }

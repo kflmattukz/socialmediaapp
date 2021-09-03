@@ -1,6 +1,7 @@
 const validator = require('validator');
 const userCollection = require('../db').db('Socialapp').collection('users');
 const bcrypt = require('bcryptjs');
+// const md5 = require('md5');
 
 const User = function (data) {
     this.data = data;
@@ -74,5 +75,10 @@ User.prototype.register = function () {
         }
     })
 }
+
+// User.prototype.getAvatar = function (email) {
+//     let hash = md5(email);
+//     return `https://www.gravatar.com/avatar/${ hash }`;
+// }
 
 module.exports = User;
