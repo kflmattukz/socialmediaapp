@@ -6,6 +6,7 @@ exports.login = async function (req,res) {
     if (result.username) {
         req.session.user = {
             username: user.data.username,
+            _id: user.data._id
         }
         req.session.save(function () {
             res.redirect('/');
@@ -31,6 +32,7 @@ exports.register = function ( req,res ) {
         .then(() => {
             req.session.user = {
                 username: user.data.username,
+                _id: user.data._id
             }
 
             req.session.save(function () {

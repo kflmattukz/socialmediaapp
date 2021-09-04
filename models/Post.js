@@ -1,8 +1,10 @@
-const postCollection = require('../db').db('Socialapp').collection('post');
+const postCollection = require('../db').db('Socialapp').collection('posts');
+const ObjectId = require('mongodb').ObjectId;
 
-const Post = function (data) {
+const Post = function (data , userId) {
     this.data = data;
     this.errors = [];
+    this.userId = userId;
 }
 
 Post.prototype.cleanUp = function () {
@@ -11,7 +13,9 @@ Post.prototype.cleanUp = function () {
 
     this.data = {
         title: this.data.title.trim(),
-        content: this.data.content.trim()
+        content: this.data.content.trim(),
+        cretated_at : new Date(),
+        author : ObjectId(this.userId)
     }
 }
 
