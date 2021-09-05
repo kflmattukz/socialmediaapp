@@ -12,6 +12,7 @@ router.post('/register', userController.register);
 //POST Route
 router.get('/create-post' , userController.isUserLogin ,postController.viewCreate);
 router.post('/create-post' , userController.isUserLogin ,postController.create);
+router.post('/posts/:id' , postController.viewSingle);
 
 
 module.exports = router;

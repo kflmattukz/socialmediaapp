@@ -40,4 +40,19 @@ Post.prototype.store = function () {
     });
 }
 
+
+Post.prototype.getSingeById = function () {
+    return new Promise( (resolve,reject) => {
+        postCollection.findOne({ _id: this.data._id })
+            .then(results => {
+                resolve(results)
+            })
+            .catch(err => {
+                this.errors.push('Something Error , try again later');
+                reject(this.errors);
+            })
+        reject();
+    });
+}
+
 module.exports = Post;

@@ -4,6 +4,10 @@ exports.viewCreate = function (req,res) {
     res.render('create-post');
 }
 
+exports.viewSingle = function (req,res) {
+    let post = new Post()
+}
+
 
 exports.create = function (req,res) {
     let post = new Post(req.body);
