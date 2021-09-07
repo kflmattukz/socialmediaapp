@@ -1,5 +1,5 @@
 const postCollection = require('../db').db('Socialapp').collection('posts');
-const ObjectId = require('mongodb').ObjectId;
+const ObjectID = require('mongodb').ObjectId;
 
 const Post = function (data , userId) {
     this.data = data;
@@ -14,8 +14,8 @@ Post.prototype.cleanUp = function () {
     this.data = {
         title: this.data.title.trim(),
         content: this.data.content.trim(),
-        cretated_at : new Date(),
-        author : ObjectId(this.userId)
+        created_at : new Date(),
+        author : ObjectID(this.userId)
     }
 }
 
@@ -40,18 +40,35 @@ Post.prototype.store = function () {
     });
 }
 
+// Post.getPosts = function() {
+//     return new Promise( async(resolve ,reject) => {
+//         const posts = await postCollection.find({}).toArray();
+//         if (posts) {
+//             // console.log(posts);
+//             resolve(posts);
+//         } else {
+//             this.errors.push('something went wrong , please try again later');
+//             reject(this.errors);
+//         }
+//     });
+// }
 
-Post.prototype.getSingeById = function () {
-    return new Promise( (resolve,reject) => {
-        postCollection.findOne({ _id: this.data._id })
-            .then(results => {
-                resolve(results)
-            })
-            .catch(err => {
-                this.errors.push('Something Error , try again later');
-                reject(this.errors);
-            })
-        reject();
+
+Post.getPostById = function(id) {
+    return new Promise(async function (resolve,reject) {
+        // console.log(typeof(id) != "string");
+        if (typeof(id) != "string" || !ObjectID.isValid(id)) {
+            // console.log('some error');
+            reject();
+            return
+        }
+
+        let post = await postCollection.findOne({ _id: new ObjectID(id)});
+        if (post) {
+            resolve(post);
+        } else {
+            reject();
+        }
     });
 }
 

@@ -1,4 +1,5 @@
 const User = require('../models/User');
+// const Post = require('../models/Post');
 
 exports.login = async function (req,res) {
     let user = new User(req.body);
@@ -64,7 +65,7 @@ exports.isUserLogin = function (req,res,next) {
 
 exports.home = function (req,res) {
     if (req.session.user) {
-        res.render('home-dashboard');
+        res.render('home-dashboard' , { success: req.flash('success')} );
     } else {
         res.render('home' , { errors: req.flash('errors') , regErrors: req.flash('regErrors')});
     }

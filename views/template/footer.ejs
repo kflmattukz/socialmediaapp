@@ -22,7 +22,9 @@
         if (flash) {
             flash.classList.toggle('hidden');
         } else {
-            regFlash.classList.toggle('hidden');
+            if (regFlash) { 
+                regFlash.classList.toggle('hidden');
+            }
         }
     }, 1000 * 5)
 
