@@ -9,6 +9,9 @@ router.post('/login' , userController.login);
 router.get('/logout' , userController.logout);
 router.post('/register', userController.register);
 
+//Profile router
+router.get('/profile/:username' , userController.isUserExist , userController.viewProfile);
+
 //POST Route
 router.get('/create-post' , userController.isUserLogin ,postController.viewCreate);
 router.post('/create-post' , userController.isUserLogin ,postController.create);

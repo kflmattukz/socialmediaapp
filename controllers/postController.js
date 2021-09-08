@@ -15,7 +15,7 @@ exports.viewSingle = async function (req,res) {
 
 
 exports.create = function (req,res) {
-    let post = new Post(req.body);
+    let post = new Post(req.body, req.session.user._id);
     post.store()
         .then(() => {
             req.flash('success' , 'Create Post success');

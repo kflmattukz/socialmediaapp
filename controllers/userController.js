@@ -6,8 +6,9 @@ exports.login = async function (req,res) {
     const result = await user.login();
     if (result.username) {
         req.session.user = {
-            username: user.data.username,
-            _id: user.data._id
+            username: result.username,
+            email: result.email,
+            _id: result._id
         }
         req.session.save(function () {
             res.redirect('/');
@@ -61,6 +62,14 @@ exports.isUserLogin = function (req,res,next) {
             res.redirect('/');
         });
     }
+}
+
+exports.isUserExist = function (req,res ,next) {
+    next();
+}
+
+exports.viewProfile = function (req,res) {
+    res.render('profile');
 }
 
 exports.home = function (req,res) {

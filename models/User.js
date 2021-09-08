@@ -49,6 +49,7 @@ User.prototype.login = async function () {
     this.cleanUp();
     const attmpUser = await userCollection.findOne({username: this.data.username});
     if (attmpUser && bcrypt.compareSync(this.data.password , attmpUser.password)) {
+        console.log(attmpUser._id);
         return attmpUser;
     } else {
         return 'invalid username/password';

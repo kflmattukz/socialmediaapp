@@ -1,4 +1,5 @@
 const postCollection = require('../db').db('Socialapp').collection('posts');
+const User = require('./User');
 const ObjectID = require('mongodb').ObjectId;
 
 const Post = function (data , userId) {
@@ -40,36 +41,67 @@ Post.prototype.store = function () {
     });
 }
 
-// Post.getPosts = function() {
-//     return new Promise( async(resolve ,reject) => {
-//         const posts = await postCollection.find({}).toArray();
-//         if (posts) {
-//             // console.log(posts);
-//             resolve(posts);
-//         } else {
-//             this.errors.push('something went wrong , please try again later');
-//             reject(this.errors);
-//         }
-//     });
-// }
+
+Post.getPost = function(aggregateOpti) {
+    return new Promise(async function (resolve,reject) {
+        aggregateOpti = aggregateOpti.concat([
+            {$lookup: { from: "users" , localField: "author" , foreignField: "_id" , as: "authorDoc"}},
+            {$project: {
+                title: 1,
+                content: 1,
+                created_at:1,
+                author: { $arrayElemAt: ["$authorDoc" , 0] }
+            }}
+        ]);
+
+        let posts = await postCollection.aggregate(aggregateOpti).toArray();
+
+        if (posts.length) {
+            posts = posts.map(function (post) {
+                post.author = {
+                    username: post.author.username,
+                    email: post.author.email
+                }
+                return post;
+            });
+        } else {
+            reject('Something went wrong, please try again later');
+        }
+        resolve(posts);
+    });
+}
 
 
 Post.getPostById = function(id) {
-    return new Promise(async function (resolve,reject) {
-        // console.log(typeof(id) != "string");
-        if (typeof(id) != "string" || !ObjectID.isValid(id)) {
-            // console.log('some error');
-            reject();
+    return new Promise ( async function (resolve , reject) {
+        if (typeof(id) != 'string' && !ObjectID.isValid(id)) {
+            reject()
             return
         }
-
-        let post = await postCollection.findOne({ _id: new ObjectID(id)});
-        if (post) {
-            resolve(post);
+    
+        let post = await Post.getPost([{ $match: { "_id": new ObjectID(id) } }]);
+    
+        if (post.length) {
+            console.log(post);
+            resolve(post[0]);
         } else {
-            reject();
+            reject('something went wrong , please try again later');
         }
     });
 }
+
+// Post.getPostByUsername = function(username) {
+//     return new Promise( async(resolve ,reject) => {
+//         if ( typeof(username) != 'string') {
+//             reject()
+//             return
+//         }
+        
+//         let user = new User()
+
+//         let posts = await Post.getPost([{ $match: { "author": new ObjectID() } }])
+
+//     });
+// }
 
 module.exports = Post;
