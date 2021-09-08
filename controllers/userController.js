@@ -1,5 +1,5 @@
 const User = require('../models/User');
-// const Post = require('../models/Post');
+const Post = require('../models/Post');
 
 exports.login = async function (req,res) {
     let user = new User(req.body);
@@ -65,11 +65,22 @@ exports.isUserLogin = function (req,res,next) {
 }
 
 exports.isUserExist = function (req,res ,next) {
-    next();
+    User.findByUsername(req.params.username).then((userDoc) => {
+        req.profileUser = userDoc
+        next()
+    }).catch(() => {
+        res.render('404')
+    })
+    
 }
 
 exports.viewProfile = function (req,res) {
-    res.render('profile');
+    Post.getPostByAuthorId(req.profileUser._id).then((posts) => {
+        res.render('profile' , {profile: req.profileUser , posts: posts});
+    }).catch(() => {
+        console.log('view Profile')
+        res.render('404')
+    })
 }
 
 exports.home = function (req,res) {

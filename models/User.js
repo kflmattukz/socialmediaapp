@@ -77,6 +77,27 @@ User.prototype.register = function () {
     })
 }
 
+
+User.findByUsername = function (username) {
+    return new Promise(function (resolve ,reject) {
+        if ( typeof(username) != 'string') {
+            reject()
+            return
+        }
+
+        userCollection.findOne({username: username}).then(function(userDoc) {
+            
+            if ( userDoc ) {
+                resolve(userDoc)
+            } else {
+                reject()
+            }
+        }).catch(function () {
+            reject()
+        })
+    })
+}
+
 // User.prototype.getAvatar = function (email) {
 //     let hash = md5(email);
 //     return `https://www.gravatar.com/avatar/${ hash }`;

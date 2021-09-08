@@ -82,7 +82,6 @@ Post.getPostById = function(id) {
         let post = await Post.getPost([{ $match: { "_id": new ObjectID(id) } }]);
     
         if (post.length) {
-            console.log(post);
             resolve(post[0]);
         } else {
             reject('something went wrong , please try again later');
@@ -90,18 +89,20 @@ Post.getPostById = function(id) {
     });
 }
 
-// Post.getPostByUsername = function(username) {
-//     return new Promise( async(resolve ,reject) => {
-//         if ( typeof(username) != 'string') {
-//             reject()
-//             return
-//         }
-        
-//         let user = new User()
+Post.getPostByAuthorId = function(authorId) {
+    return new Promise( async(resolve ,reject) => {
+        if ( typeof(authorId) != 'string' && !ObjectID.isValid(authorId)) {
+            reject()
+            return
+        }
 
-//         let posts = await Post.getPost([{ $match: { "author": new ObjectID() } }])
-
-//     });
-// }
+        let posts = await Post.getPost([{ $match: { "author": new ObjectID(authorId) } }])
+        if (posts.length) {
+            resolve(posts)
+        } else {
+            reject()
+        }
+    });
+}
 
 module.exports = Post;
