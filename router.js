@@ -16,6 +16,8 @@ router.get('/profile/:username' , userController.isUserExist , userController.vi
 router.get('/create-post' , userController.isUserLogin ,postController.viewCreate);
 router.post('/create-post' , userController.isUserLogin ,postController.create);
 router.get('/post/:id' , postController.viewSingle);
+router.get('/post/:id/edit' , postController.viewEdit);
+router.post('/post/:id/edit' , postController.update);
 
 
 module.exports = router;

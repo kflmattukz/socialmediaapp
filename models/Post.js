@@ -1,11 +1,12 @@
 const postCollection = require('../db').db('Socialapp').collection('posts');
-const User = require('./User');
+// const User = require('./User');
 const ObjectID = require('mongodb').ObjectId;
 
-const Post = function (data , userId) {
+const Post = function (data , userId , reqPostId) {
     this.data = data;
     this.errors = [];
     this.userId = userId;
+    this.reqPostId = reqPostId;
 }
 
 Post.prototype.cleanUp = function () {
@@ -42,7 +43,43 @@ Post.prototype.store = function () {
 }
 
 
-Post.getPost = function(aggregateOpti) {
+Post.prototype.update = function () {
+    return new Promise( async (resolve ,reject) => {
+        try {
+            let post = await Post.getPostById(this.reqPostId , this.userId)
+            //cek if the visitor is author of the post 
+            // console.log(post.isVisitorOwner)
+            if (post.isVisitorOwner) {
+                let status = await this.updatePost()
+                resolve(status)
+            } else {
+                reject()
+            }
+        } catch (err) {
+            // reject()
+        }
+    })
+}
+
+Post.prototype.updatePost = function () {
+    return new Promise (async (resolve, reject) => {
+        this.cleanUp()
+        this.validate()
+
+        if (!this.errors.length) {
+            await postCollection.findOneAndUpdate({_id: new ObjectID(this.reqPostId)} , {$set: {
+                title: this.data.title,
+                content: this.data.content
+             }})
+            resolve('success')
+        } else {
+            reject('failure')
+        }
+        reject()
+    })
+}
+
+Post.getPost = function(aggregateOpti , visitorId) {
     return new Promise(async function (resolve,reject) {
         aggregateOpti = aggregateOpti.concat([
             {$lookup: { from: "users" , localField: "author" , foreignField: "_id" , as: "authorDoc"}},
@@ -50,14 +87,16 @@ Post.getPost = function(aggregateOpti) {
                 title: 1,
                 content: 1,
                 created_at:1,
+                authorId : "$author",
                 author: { $arrayElemAt: ["$authorDoc" , 0] }
             }}
         ]);
 
         let posts = await postCollection.aggregate(aggregateOpti).toArray();
 
-        if (posts.length) {
+        if (posts) {
             posts = posts.map(function (post) {
+                post.isVisitorOwner = post.authorId.equals(visitorId)
                 post.author = {
                     username: post.author.username,
                     email: post.author.email
@@ -72,14 +111,14 @@ Post.getPost = function(aggregateOpti) {
 }
 
 
-Post.getPostById = function(id) {
+Post.getPostById = function(id , visitorId) {
     return new Promise ( async function (resolve , reject) {
         if (typeof(id) != 'string' && !ObjectID.isValid(id)) {
             reject()
             return
         }
     
-        let post = await Post.getPost([{ $match: { "_id": new ObjectID(id) } }]);
+        let post = await Post.getPost([{ $match: { "_id": new ObjectID(id) } }] , visitorId);
     
         if (post.length) {
             resolve(post[0]);
@@ -97,12 +136,16 @@ Post.getPostByAuthorId = function(authorId) {
         }
 
         let posts = await Post.getPost([{ $match: { "author": new ObjectID(authorId) } }])
-        if (posts.length) {
+        if (posts) {
             resolve(posts)
         } else {
+            console.log('here...')
             reject()
         }
     });
 }
+
+
+
 
 module.exports = Post;

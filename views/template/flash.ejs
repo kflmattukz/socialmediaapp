@@ -1,0 +1,8 @@
+<% success.forEach(msg => { %>
+    <div class="absolute top-20 tracking-wide font-light left-1/3 text-center py-2 w-1/3 rounded mx-auto border border-green-600 border-opacity-80 bg-green-400 text-green-800 text-base" id="flash"><%= msg %></div>
+<% }) %>
+
+
+<% errors.forEach(msg => { %>
+    <div class="absolute top-20 tracking-wide font-light left-1/3 text-center py-2 w-1/3 rounded mx-auto border border-red-600 border-opacity-80 bg-red-400 text-red-800 text-base" id="flash"><%= msg %></div>
+<% }) %>

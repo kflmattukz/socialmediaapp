@@ -86,7 +86,6 @@ User.findByUsername = function (username) {
         }
 
         userCollection.findOne({username: username}).then(function(userDoc) {
-            
             if ( userDoc ) {
                 resolve(userDoc)
             } else {

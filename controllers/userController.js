@@ -78,15 +78,14 @@ exports.viewProfile = function (req,res) {
     Post.getPostByAuthorId(req.profileUser._id).then((posts) => {
         res.render('profile' , {profile: req.profileUser , posts: posts});
     }).catch(() => {
-        console.log('view Profile')
         res.render('404')
     })
 }
 
 exports.home = function (req,res) {
     if (req.session.user) {
-        res.render('home-dashboard' , { success: req.flash('success')} );
+        res.render('home-dashboard');
     } else {
-        res.render('home' , { errors: req.flash('errors') , regErrors: req.flash('regErrors')});
+        res.render('home' , {regErrors: req.flash('regErrors')});
     }
 }
