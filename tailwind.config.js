@@ -1,7 +1,7 @@
 module.exports = {
-  // mode: 'jit',
+  mode: 'jit',
   purge: [
-    // './view/**/*.ejs',
+    './views/**/*.ejs',
   ],
   darkMode: false, // or 'media' or 'class'
   theme: {
