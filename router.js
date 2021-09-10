@@ -18,6 +18,7 @@ router.post('/create-post' , userController.isUserLogin ,postController.create);
 router.get('/post/:id' , postController.viewSingle);
 router.get('/post/:id/edit' ,userController.isUserLogin ,  postController.viewEdit);
 router.post('/post/:id/edit' , userController.isUserLogin ,  postController.update);
+router.get('/post/:id/delete' ,userController.isUserLogin ,  postController.delete);
 
 
 module.exports = router;

@@ -59,10 +59,19 @@ exports.create = function (req,res) {
             req.flash('success' , 'Create Post success.') 
             req.session.save(() => { res.redirect(`/post/${ newId }`) })
         }).catch( errors => {
-            console.log(errors)
             errors.forEach(err => {
                 req.flash('errors' , err)
             });
             req.session.save(()=> { res.redirect('/create-post') })
         })
+}
+
+exports.delete = function (req, res) {
+    Post.destroy(req.params.id , req.visitorId).then( () => {
+        req.flash('success' , 'Post successfully deleted.')
+        req.session.save( ()=> { res.redirect(`/profile/${ req.session.user.username }`) })
+    }).catch( () => {
+        req.flash('errors' , 'You don\'t have permission to delete the post.' )
+        req.session.save( () => { res.redirect('/') })
+    })
 }

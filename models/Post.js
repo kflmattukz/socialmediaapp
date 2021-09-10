@@ -1,5 +1,6 @@
 const postCollection = require('../db').db('Socialapp').collection('posts');
 const ObjectID = require('mongodb').ObjectId;
+const sanitizeHTML = require('sanitize-html');
 
 const Post = function (data , userId , reqPostId) {
     this.data = data;
@@ -13,32 +14,33 @@ Post.prototype.cleanUp = function () {
     if ( typeof(this.data.content) != 'string') { this.data.content = ''}
 
     this.data = {
-        title: this.data.title.trim(),
-        content: this.data.content.trim(),
+        title: sanitizeHTML(this.data.title.trim(), {allowedTags: [] , allowedAttributes: {}}),
+        content: sanitizeHTML(this.data.content.trim(), {allowedTags: [] , allowedAttributes: {}}),
         created_at : new Date(),
         author : ObjectID(this.userId)
     }
 }
 
 Post.prototype.validate = function () {
-    if ( this.data.title === '' ) { this.errors.push('Title post can\'t be empty')}
-    if ( this.data.content === '' ) { this.errors.push('Content post can\'t be empty')}
+    if ( this.data.title == '' ) { this.errors.push('Title post can\'t be empty.')}
+    if ( this.data.content == '' ) { this.errors.push('Content post can\'t be empty.')}
 }
 
 Post.prototype.store = function () {
     return new Promise( (resolve , reject) => {
         this.cleanUp();
         this.validate();
-
+        // console.log(this.errors)
         if ( !this.errors.length ) {
             postCollection.insertOne(this.data)
                 .then( info => { 
                     resolve(info.insertedId)
-                }).catch((err) => {
-                    console.log(err)
+                }).catch(() => {  
                     this.errors.push('Something weng wrong, Please try again later.')
                     reject(this.errors);
-            })
+                })
+        } else {
+            reject(this.errors);
         }
     });
 }
@@ -146,7 +148,20 @@ Post.getPostByAuthorId = function(authorId) {
     });
 }
 
-
-
+Post.destroy = function (postId , visitorId) {
+    return new Promise( async (resolve , reject) => {
+        try {
+            let post = await Post.getPostById(postId , visitorId)
+            if (post.isVisitorOwner) {
+                await postCollection.deleteOne({_id: new ObjectID(postId)})
+                resolve()
+            } else {
+                reject()
+            }
+        } catch (error) {
+            reject()
+        }
+    })
+}
 
 module.exports = Post;

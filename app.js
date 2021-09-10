@@ -2,6 +2,8 @@ const express = require('express');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const flash = require('connect-flash');
+const markdown = require('marked');
+const sanitizeHTML = require('sanitize-html')
 
 const sessionOptions = session({
     secret: process.env.SECRET_KEY,
@@ -27,6 +29,9 @@ app.use(express.json());
 //save the data to locals
 app.use(function (req ,res , next) {
     //
+    res.locals.filterUserHTML = function (content) {
+        return sanitizeHTML(markdown(content) , {allowedTags: ['p' ,'ol' , 'ul' , 'li' , 'strong' , 'bold' ,'italic' , 'underline' , 'em' , 'h1' , 'h2' ,'h3' ,'h4' ,'h5' ,'h6'] , allowedAttributes: {}})
+    }
     if ( req.session.user ) {
         req.visitorId = req.session.user._id
     } else {

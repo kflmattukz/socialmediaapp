@@ -1,7 +1,7 @@
 <%- include('template/head') %>
 <%- include('template/flash') %>
 
-    <div class="w-2/4 h-full mt-5 mx-auto mb-auto items-center relative">
+    <div class="w-2/4 mt-5 mx-auto relative">
         <% if (post.isVisitorOwner) { %>
             <div class="absolute right-0 top-2 flex gap-5 items-center">
                 <a href="/post/<%= post._id %>/edit" class="text-blue-500 hover:text-blue-600 pt-1">
@@ -26,7 +26,11 @@
                  on <%= post.created_at.getDate() %>/<%= post.created_at.getMonth() + 1 %>/<%= post.created_at.getFullYear() %>
             </div>
         </div>
-        <p class="text-gray-600 text-base text-justify"><%= post.content %> </p>
+        <p class="text-gray-600 text-base text-justify">
+            <div class="prose">
+                <%- filterUserHTML(post.content) %>
+            </div>
+        </p>
     </div>
 
 <%- include('template/footer') %>
