@@ -1,4 +1,3 @@
-const { rawListeners } = require('../app');
 const Post = require('../models/Post');
 
 exports.viewCreate = function (req,res) {
@@ -17,7 +16,13 @@ exports.viewSingle = async function (req,res) {
 exports.viewEdit = async function (req,res) {
     try {
         let post = await Post.getPostById(req.params.id)
-        res.render('edit-post' , {post: post})
+        
+        if (post.authorId == req.visitorId) {
+            res.render('edit-post' , {post: post})
+        } else {
+            req.flash('errors' , 'you dont\'t have permission to edit this post')
+            req.session.save(() => { res.redirect('/') })
+        }
     } catch (error) {
         res.render('404');
     }
@@ -48,15 +53,16 @@ exports.update = function (req,res) {
 }
 
 exports.create = function (req,res) {
-    let post = new Post(req.body, req.session.user._id);
-    post.store()
-        .then(() => {
-            req.flash('success' , 'Create Post success');
-            req.session.save(function () {
-                res.redirect('/');
+    let post = new Post(req.body, req.session.user._id)
+    
+    post.store().then( newId => {
+            req.flash('success' , 'Create Post success.') 
+            req.session.save(() => { res.redirect(`/post/${ newId }`) })
+        }).catch( errors => {
+            console.log(errors)
+            errors.forEach(err => {
+                req.flash('errors' , err)
             });
+            req.session.save(()=> { res.redirect('/create-post') })
         })
-        .catch((err) => {
-            console.log(`Error ${ err }`);
-        });
 }

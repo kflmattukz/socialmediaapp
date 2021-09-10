@@ -1,5 +1,4 @@
 const postCollection = require('../db').db('Socialapp').collection('posts');
-// const User = require('./User');
 const ObjectID = require('mongodb').ObjectId;
 
 const Post = function (data , userId , reqPostId) {
@@ -33,10 +32,12 @@ Post.prototype.store = function () {
 
         if ( !this.errors.length ) {
             postCollection.insertOne(this.data)
-                .then(() => {
-                    resolve();
-                }).catch(() => {
-                    reject('Please try again later');
+                .then( info => { 
+                    resolve(info.insertedId)
+                }).catch((err) => {
+                    console.log(err)
+                    this.errors.push('Something weng wrong, Please try again later.')
+                    reject(this.errors);
             })
         }
     });

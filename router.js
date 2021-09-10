@@ -10,14 +10,14 @@ router.get('/logout' , userController.logout);
 router.post('/register', userController.register);
 
 //Profile router
-router.get('/profile/:username' , userController.isUserExist , userController.viewProfile);
+router.get('/profile/:username' , userController.isUserLogin , userController.isUserExist , userController.viewProfile);
 
 //POST Route
 router.get('/create-post' , userController.isUserLogin ,postController.viewCreate);
 router.post('/create-post' , userController.isUserLogin ,postController.create);
 router.get('/post/:id' , postController.viewSingle);
-router.get('/post/:id/edit' , postController.viewEdit);
-router.post('/post/:id/edit' , postController.update);
+router.get('/post/:id/edit' ,userController.isUserLogin ,  postController.viewEdit);
+router.post('/post/:id/edit' , userController.isUserLogin ,  postController.update);
 
 
 module.exports = router;
