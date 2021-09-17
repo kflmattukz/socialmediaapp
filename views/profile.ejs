@@ -4,39 +4,124 @@
     <div class="w-2/4 mt-10 mx-auto">
         <div class="flex items-center gap-2">
             <img class="w-20 h-20 rounded-full" 
-            src="https://avatars.dicebear.com/api/initials/<%= profile.email %>.svg" alt="User Profile">
+            src="https://avatars.dicebear.com/api/initials/<%= profile.username %>.svg" alt="User Profile">
             <div class="text-4xl font-medium text-gray-700 tracking-tight"><%= profile.username %></div>
-            <button class="bg-blue-500 py-2 px-3 font-semibold text-white tracking-wider hover:bg-blue-600 rounded shadow-md">Follow&nbsp;+</button>
+            <% if ( profile._id && !isVisitorProfile ) { %>
+                <% if (isFollowing) { %>
+                    <a href="/unfollow/<%= profile.username %>" class="bg-red-500 py-2 px-3 font-semibold text-white tracking-wider hover:bg-red-600 rounded shadow-md">Unfollow&nbsp;+</a>
+                <% } else { %>
+                    <a href="/follow/<%= profile.username %>" class="bg-blue-500 py-2 px-3 font-semibold text-white tracking-wider hover:bg-blue-600 rounded shadow-md">Follow&nbsp;+</a>
+                <% } %>
+            <% } %>
         </div>
 
         <div class="mt-10 text-gray-800">
-            <h2 class="ml-2 pb-3 text-lg font-bold tracking-wide text-gray-700">Post</h2>
+            <div class="flex gap-3 items-center font-bold text-gray-700">
+                <button class="ml-2 pb-3 text-lg tracking-wide active-tab tab post">Post: <%= posts.length %></button>
+                <button class="ml-2 pb-3 text-lg tracking-wide tab following">Following: <%= followings.length %></button>
+                <button class="ml-2 pb-3 text-lg tracking-wide tab follower">Follower: <%= followers.length %></button>
+            </div>
             <hr>
 
-            <div class="flex flex-col gap-2">
-                
-                <% if (posts.length > 0) { %>
-                
-                    <% posts.forEach(post => { %>
-                        <a href="/post/<%= post._id %>" class="flex items-center gap-2 bg-white p-2 rounded-md shadow-sm border border-gray-600 border-opacity-25 hover:shadow-md"> 
-                            <img class="w-8 h-8 rounded-full" src="https://avatars.dicebear.com/api/initials/<%= post.author.email %>.svg" alt="Author Avatar">
-                            <div class="font-medium text-gray-700"><%= post.title %></div>
-                            <div class="text-gray-700 font-light">on <%= post.created_at.getDate() %>/<%= post.created_at.getMonth() + 1 %>/<%= post.created_at.getFullYear() %></div>
-                        </a>
-                    <% }) %>
-    
-                <% } else { %>
-                    
-                    <div class="text-4xl text-gray-900 font-thin text-center mt-5">
-                        You don't have any post yet. <br>
-                        let's go create <a class="text-blue-500 hover:text-blue-600" href="/create-post">here.</a>
+            <div class="mt-5">
+                <div>
+                    <!-- POST -->
+                    <div class="flex flex-col gap-2" id="post">
+                        <% if (posts.length > 0) { %>
+                        
+                            <% posts.forEach(post => { %>
+                                <a href="/post/<%= post._id %>" class="flex items-center gap-2 bg-white p-2 rounded-md shadow-sm border border-gray-600 border-opacity-25 hover:shadow-xl transform hover:scale-105 transition-all duration-300"> 
+                                    <img class="w-8 h-8 rounded-full" src="https://avatars.dicebear.com/api/initials/<%= post.author.username %>.svg" alt="Author Avatar">
+                                    <div class="font-medium text-gray-700"><%= post.title %></div>
+                                    <div class="text-gray-700 font-light">on <%= post.created_at.getDate() %>/<%= post.created_at.getMonth() + 1 %>/<%= post.created_at.getFullYear() %></div>
+                                </a>
+                            <% }) %>
+            
+                        <% } else { %>
+                            
+                            <div class="text-4xl text-gray-900 font-thin text-center mt-5">
+                                You don't have any post yet. <br>
+                                let's go create <a class="text-blue-500 hover:text-blue-600" href="/create-post">here.</a>
+                            </div>
+            
+                        <% } %>
                     </div>
-    
-                <% } %>
+                    <!-- Following -->
+                    <div class="flex flex-col gap-2 hidden" id="following">
+                        <% if (followings.length > 0) { %>
+                        
+                            <% followings.forEach(following => { %>
+                                <a href="/profile/<%= following.username %>" class="flex items-center gap-2 bg-white p-2 rounded-md shadow-sm border border-gray-600 border-opacity-25 hover:shadow-xl transform hover:scale-105 transition-all duration-300"> 
+                                    <img class="w-8 h-8 rounded-full" src="https://avatars.dicebear.com/api/initials/<%= following.username %>.svg" alt="Author Avatar">
+                                    <div class="font-medium text-gray-700"><%= following.username %></div>
+                                    
+                                </a>
+                            <% }) %>
+            
+                        <% } else { %>
+                            
+                            <div class="text-4xl text-gray-900 font-thin text-center mt-5">
+                                You don't have follow anyone yet. <br>
+                            </div>
+            
+                        <% } %>
+                    </div>
+                    <!-- Follower -->
+                    <div class="flex flex-col gap-2 hidden" id="follower">
+                        <% if (followers.length > 0) { %>
+                        
+                            <% followers.forEach(follower => { %>
+                                <a href="/profile/<%= follower.username %>" class="flex items-center gap-2 bg-white p-2 rounded-md shadow-sm border border-gray-600 border-opacity-25 hover:shadow-xl transform hover:scale-105 transition-all duration-300"> 
+                                    <img class="w-8 h-8 rounded-full" src="https://avatars.dicebear.com/api/initials/<%= follower.username %>.svg" alt="Author Avatar">
+                                    <div class="font-medium text-gray-700"><%= follower.username %></div>
+                                    
+                                </a>
+                            <% }) %>
+            
+                        <% } else { %>
+                            
+                            <div class="text-4xl text-gray-900 font-thin text-center mt-5">
+                                You don't have follower anyone yet. <br>
+                            </div>
+            
+                        <% } %>
+                    </div>
+                </div>
+
 
             </div>
 
         </div>
     </div>
+
+
+    <script>
+        
+        const tabs = document.querySelectorAll('.tab');
+        const post = document.getElementById('post')
+        const following = document.getElementById('following')
+        const follower = document.getElementById('follower')
+
+        tabs.forEach(tab => {
+            tab.addEventListener("click" , function (e) {
+                document.querySelector(".active-tab").classList.remove("active-tab");
+                e.target.classList.add("active-tab")
+                if (e.target.classList.contains('post')) {
+                    post.classList.remove("hidden")
+                    follower.classList.add("hidden")
+                    following.classList.add("hidden")
+                } else if ( e.target.classList.contains('following')) {
+                    following.classList.remove("hidden")
+                    follower.classList.add("hidden")
+                    post.classList.add("hidden")
+                } else {
+                    follower.classList.remove("hidden")
+                    following.classList.add("hidden")
+                    post.classList.add("hidden")
+                }
+            })
+        })
+
+    </script>
 
 <%- include('template/footer') %>

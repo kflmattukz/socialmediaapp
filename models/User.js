@@ -47,6 +47,7 @@ User.prototype.validate = function () {
 
 User.prototype.login = async function () {
     this.cleanUp();
+    
     const attmpUser = await userCollection.findOne({username: this.data.username});
     if (attmpUser && bcrypt.compareSync(this.data.password , attmpUser.password)) {
         return attmpUser;

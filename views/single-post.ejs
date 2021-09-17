@@ -19,7 +19,7 @@
         <h3 class="text-3xl font-semibold text-gray-700 mb-2"><%= post.title %></h3>
         <div class="flex gap-1 items-center mb-2">
             <div class="flex items-center">
-                <img class="w-8 h-8 rounded-full mr-1" src="https://avatars.dicebear.com/api/initials/<%= post.author.email %>.svg" alt="author profile">
+                <img class="w-8 h-8 rounded-full mr-1" src="https://avatars.dicebear.com/api/initials/<%= post.author.username %>.svg" alt="author profile">
                 <div class="font-light text-sm">posted by <a href="/profile/<%= post.author.username %>" class="text-blue-700 italic"><%= post.author.username %></a></div>
             </div>
             <div class="font-light text-gray-600 text-sm">

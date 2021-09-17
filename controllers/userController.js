@@ -1,5 +1,6 @@
 const User = require('../models/User');
 const Post = require('../models/Post');
+const Follow = require('../models/Follow');
 
 exports.login = async function (req,res) {
     let user = new User(req.body);
@@ -74,17 +75,43 @@ exports.isUserExist = function (req,res ,next) {
     
 }
 
-exports.viewProfile = function (req,res) {
+exports.viewProfile = function (req,res) { 
     Post.getPostByAuthorId(req.profileUser._id).then((posts) => {
-        res.render('profile' , {profile: req.profileUser , posts: posts});
+        res.render('profile' , {
+            profile: req.profileUser, 
+            posts: posts,
+            visitorId: req.visitorId,
+            isFollowing: req.isFollowing,
+            isVisitorProfile: req.isVisitorProfile,
+            followings: req.getFollowing,
+            followers: req.getFollower
+        });
     }).catch(() => {
         res.render('404')
     })
 }
 
+exports.sharedProfileData = async function (req,res,next) {
+    let isVisitorProfile = false;
+    let isFollowing = false;
+    if (req.session.user) {
+        isVisitorProfile = req.profileUser._id.equals(req.session.user._id)
+        getFollower = await Follow.getFollowerById(req.profileUser._id)
+        getFollowing = await Follow.getFollowingById(req.profileUser._id)
+        isFollowing = await Follow.isFollowing(req.profileUser._id , req.visitorId)
+    } 
+
+    req.getFollower = getFollower
+    req.getFollowing = getFollowing
+    req.isVisitorProfile = isVisitorProfile
+    req.isFollowing = isFollowing
+    next()
+}
+
 exports.home = function (req,res) {
     if (req.session.user) {
-        res.render('home-dashboard');
+        let posts = Post.getFeed(req.visitorId)
+        res.render('home-dashboard', { posts: posts });
     } else {
         res.render('home' , {regErrors: req.flash('regErrors')});
     }

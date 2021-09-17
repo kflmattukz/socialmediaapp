@@ -4,14 +4,18 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon db",
+    "dev": "nodemon db --ignore frondend-js --ignore public/ & webpack --watch",
     "build:css": "npx tailwindcss -i ./src/css/tailwind.css -o ./public/css/tailwind.css"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@babel/core": "^7.15.5",
+    "@babel/preset-env": "^7.15.6",
     "@tailwindcss/typography": "^0.4.1",
+    "axios": "^0.21.4",
+    "babel-loader": "^8.2.2",
     "bcryptjs": "^2.4.3",
     "connect-flash": "^0.1.1",
     "connect-mongo": "^4.5.0",
@@ -23,7 +27,9 @@
     "md5": "^2.3.0",
     "mongodb": "^4.1.1",
     "sanitize-html": "^2.5.0",
-    "validator": "^13.6.0"
+    "validator": "^13.6.0",
+    "webpack": "^5.52.1",
+    "webpack-cli": "^4.8.0"
   },
   "devDependencies": {
     "autoprefixer": "^10.3.3",

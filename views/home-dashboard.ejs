@@ -1,19 +1,32 @@
 <%- include('template/head.ejs') %>
     
     <!-- MAIN CONTENT -->
-    <div class="w-2/4 h-full flex mt-5 mx-auto mb-auto">
+    <div class="w-2/4 h-full flex flex-col mt-5 mx-auto mb-auto">
 
         <%- include('template/flash') %>
         
-        <div class="text-gray-800">
-           <h3 class="text-3xl font-light">Welcome <strong class="font-semibold"><%= user.username %></strong> to Social App</h3> 
-           <p class="text-justify text-base py-3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus inventore debitis voluptatum vitae explicabo illo ducimus odit provident, asperiores quisquam sapiente facere! Iure, provident expedita culpa porro laudantium, perspiciatis ducimus vitae quibusdam saepe qui dolor nisi, architecto laboriosam aut sint nesciunt rem. Veniam itaque eum error debitis tempore. Saepe ratione quidem cupiditate? Reiciendis suscipit necessitatibus voluptatibus sit tempora! Enim, illum iste sequi corrupti qui vitae explicabo ad cumque, reprehenderit rem quod dolor! Aperiam earum animi dolor veniam, quos, vitae explicabo repellendus quibusdam excepturi culpa qui ad a alias perspiciatis saepe esse deserunt amet hic quis id maxime expedita. Ab, veritatis.</p>
-        </div>
+        <% if ( posts.length > 0) { %>
+            
+            <% posts.forEach(post => { %>
+               
+                <div class="flex flex-col gap-3">
+                    <div class="">
 
-        
+                    </div>
+                    <div>
+                        <%= post.content %>
+                    </div>
+                </div>
 
-        
+            <% }); %>
 
+        <% } else { %>
+            <div class="text-gray-800">
+               <h3 class="text-3xl font-light">Welcome <strong class="font-semibold"><%= user.username %></strong> to Social App</h3> 
+               <p class="text-justify text-base py-3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus inventore debitis voluptatum vitae explicabo illo ducimus odit provident, asperiores quisquam sapiente facere! Iure, provident expedita culpa porro laudantium, perspiciatis ducimus vitae quibusdam saepe qui dolor nisi, architecto laboriosam aut sint nesciunt rem. Veniam itaque eum error debitis tempore. Saepe ratione quidem cupiditate? Reiciendis suscipit necessitatibus voluptatibus sit tempora! Enim, illum iste sequi corrupti qui vitae explicabo ad cumque, reprehenderit rem quod dolor! Aperiam earum animi dolor veniam, quos, vitae explicabo repellendus quibusdam excepturi culpa qui ad a alias perspiciatis saepe esse deserunt amet hic quis id maxime expedita. Ab, veritatis.</p>
+            </div>
+
+        <% } %>
     </div>
 
 </div>

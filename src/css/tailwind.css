@@ -13,4 +13,8 @@
         @apply px-4 py-2 rounded shadow outline-none focus:ring ring-blue-600;
     }
 
+    .active-tab {
+      @apply border-b-4 border-blue-700 text-blue-700;
+    }
+
   }

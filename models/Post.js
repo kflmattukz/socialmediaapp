@@ -1,4 +1,5 @@
 const postCollection = require('../db').db('Socialapp').collection('posts');
+const followCollection = require('../db').db('Socialapp').collection('follows');
 const ObjectID = require('mongodb').ObjectId;
 const sanitizeHTML = require('sanitize-html');
 
@@ -85,34 +86,31 @@ Post.prototype.updatePost = function () {
 Post.getPost = function(aggregateOpti , visitorId) {
     return new Promise(async function (resolve,reject) {
         aggregateOpti = aggregateOpti.concat([
-            {$lookup: { from: "users" , localField: "author" , foreignField: "_id" , as: "authorDoc"}},
-            {$project: {
+            { $lookup: { from: "users" , localField: "author" , foreignField: "_id" , as: "authorDoc" } },
+            { $project: {
                 title: 1,
                 content: 1,
                 created_at:1,
                 authorId : "$author",
                 author: { $arrayElemAt: ["$authorDoc" , 0] }
-            }}
+            } }
         ]);
 
         let posts = await postCollection.aggregate(aggregateOpti).toArray();
 
-        if (posts) {
-            posts = posts.map(function (post) {
-                post.isVisitorOwner = post.authorId.equals(visitorId)
-                post.author = {
-                    username: post.author.username,
-                    email: post.author.email
-                }
-                return post;
-            });
-        } else {
-            reject('Something went wrong, please try again later');
-        }
+        posts = posts.map(function (post) {
+            post.isVisitorOwner = post.authorId.equals(visitorId)    
+            // post.authorId = undefined;
+            post.author = {
+                username: post.author.username,
+                email: post.author.email
+            }
+            return post;
+        });
+
         resolve(posts);
     });
 }
-
 
 Post.getPostById = function(id , visitorId) {
     return new Promise ( async function (resolve , reject) {
@@ -132,20 +130,31 @@ Post.getPostById = function(id , visitorId) {
 }
 
 Post.getPostByAuthorId = function(authorId) {
-    return new Promise( async(resolve ,reject) => {
-        if ( typeof(authorId) != 'string' && !ObjectID.isValid(authorId)) {
-            reject()
-            return
-        }
+    // return new Promise( async(resolve ,reject) => {
+    //     if ( typeof(authorId) != 'string' && !ObjectID.isValid(authorId)) {
+    //         reject()
+    //         return
+    //     }
 
-        let posts = await Post.getPost([{ $match: { "author": new ObjectID(authorId) } }])
-        if (posts) {
-            resolve(posts)
-        } else {
-            console.log('here...')
-            reject()
-        }
-    });
+    //     let posts = await Post.getPost([
+    //         { $match: { "author": new ObjectID(authorId) } },
+    //         { $sort: { created_at: -1 }}
+    //     ])
+    //     if (posts) {
+    //         resolve(posts)
+    //     } else {
+    //         console.log('here...')
+    //         reject()
+    //     }
+    // });
+    if (typeof(authorId) != 'string' && !ObjectID.isValid(authorId) ) {
+        reject()
+        return
+    }
+    return Post.getPost([
+        { $match: { "author": new ObjectID(authorId) } },
+        { $sort: { created_at: -1 }}
+    ])
 }
 
 Post.destroy = function (postId , visitorId) {
@@ -162,6 +171,50 @@ Post.destroy = function (postId , visitorId) {
             reject()
         }
     })
+}
+
+Post.search = function (searchTerm) {
+    return new Promise ( async(resolve , reject) => {
+        if (typeof(searchTerm) == 'string') {
+            let posts = await postCollection.aggregate([
+                { $match: { $text: { $search: searchTerm } } },
+                { $lookup: { from: "users" , localField: "author" , foreignField: "_id" , as: "authorDoc"} },
+                { $sort: { score: { $meta: "textScore" } } },
+                { $project: {
+                    title: 1,
+                    content: 1,
+                    created_at: 1,
+                    authorId: "$author",
+                    author: { $arrayElemAt: [ "$authorDoc" , 0 ] }
+                }}
+                
+            ]).toArray();
+
+            // posts = posts.map(function (post) {
+            //     post.author = {
+            //     username: post.author.username,
+            //     email: post.author.email
+            // }
+            // return post;
+            // });
+            
+            resolve(posts);
+        } else {
+            reject()
+        }        
+    });
+}
+
+Post.getFeed = async function (id) {
+    let followedUser = await followCollection.find({ authorId: new ObjectID(id) }).toArray()
+    followedUser = followedUser.map( followDoc => {
+        return followDoc.followedId
+    })
+
+    return Post.getPost([
+        { $match: { author: { $in: followedUser } } }
+        // { $sort: {$created_at: -1 } }
+    ])
 }
 
 module.exports = Post;
