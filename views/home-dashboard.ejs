@@ -5,20 +5,31 @@
 
         <%- include('template/flash') %>
         
-        <% if ( posts.length > 0) { %>
+        <% if ( posts.length > 0 ) { %>
             
-            <% posts.forEach(post => { %>
-               
-                <div class="flex flex-col gap-3">
-                    <div class="">
+            <div>
+                <h2 class="text-center text-3xl text-gray-600 mb-5 font-extralight tracking-wide">Latest feed from you follow</h2>
+            </div>
+            
+            <div class="flex flex-col gap-3">
+                <% posts.forEach(post => { %>
+                
+                    
+                        <div class="flex flex-col bg-white p-3 rounded-md border border-gray-200 shadow-sm">
+                            <div class="flex items-center gap-2">
+                                <img src="https://avatars.dicebear.com/api/initials/<%= post.author.username %>.svg" alt="Profile Picture" class="w-8 h-8 rounded-full">
+                                <div class="font-medium text-sm text-gray-700">
+                                    <a href="/post/<%= post._id %> " class="text-gray-600 capitalize"><%= post.title %></a> post by 
+                                    <a href="/porfile/<%= post.author.username %> " class="text-blue-600 font-light tracking-wide"><%= post.author.username %></a> on 
+                                    <div class="inline text-xs text-gray-500"><%= post.created_at.getDate() %>/<%= post.created_at.getMonth() %>/<%= post.created_at.getFullYear() %></div></div> 
+                            </div>
+                            <div class="mt-2 ml-10">
+                                <div class="py-2 bg-gray-100 pl-3 rounded-lg text-gray-700"><%= post.content %></div>
+                            </div>
+                        </div>
 
-                    </div>
-                    <div>
-                        <%= post.content %>
-                    </div>
-                </div>
-
-            <% }); %>
+                <% }); %>
+            </div>
 
         <% } else { %>
             <div class="text-gray-800">

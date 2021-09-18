@@ -113,10 +113,11 @@ Follow.getFollowerById = function (profileId) {
             followerDoc = followerDoc.map(follower => {
                 let user  = new User(follower)
                 return {
-                    username: follower.username,
-                    email: follower.email
+                    username: user.username,
+                    email: user.email
                 }
             })
+            console.log(followerDoc)
             resolve(followerDoc)
         } catch {
             reject()

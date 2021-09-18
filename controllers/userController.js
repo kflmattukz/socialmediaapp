@@ -108,9 +108,20 @@ exports.sharedProfileData = async function (req,res,next) {
     next()
 }
 
-exports.home = function (req,res) {
+exports.home = async function (req,res) {
     if (req.session.user) {
-        let posts = Post.getFeed(req.visitorId)
+        let posts = await Post.getFeed(req.visitorId)
+
+        posts = posts.map(post => {
+            _id = post._id
+            title = post.title
+            content = post.content
+            created_at = new Date(post.created_at)
+            author = post.author
+            
+            return { _id,title,content,created_at,author }
+        })
+
         res.render('home-dashboard', { posts: posts });
     } else {
         res.render('home' , {regErrors: req.flash('regErrors')});

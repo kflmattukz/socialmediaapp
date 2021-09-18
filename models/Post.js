@@ -211,9 +211,10 @@ Post.getFeed = async function (id) {
         return followDoc.followedId
     })
 
-    return Post.getPost([
-        { $match: { author: { $in: followedUser } } }
-        // { $sort: {$created_at: -1 } }
+    // console.log(followedUser)
+    return await Post.getPost([
+        { $match: { author: { $in: followedUser } } },
+        // { $sort: { $created_at: -1 } }
     ])
 }
 
