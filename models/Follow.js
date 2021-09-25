@@ -110,14 +110,15 @@ Follow.getFollowerById = function (profileId) {
                     email: { $arrayElemAt: ["$userDoc.email" , 0]}
                 } }
             ]).toArray()
+            
             followerDoc = followerDoc.map(follower => {
                 let user  = new User(follower)
                 return {
-                    username: user.username,
-                    email: user.email
+                    username: user.data.username,
+                    email: user.data.email
                 }
             })
-            console.log(followerDoc)
+            
             resolve(followerDoc)
         } catch {
             reject()

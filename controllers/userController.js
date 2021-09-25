@@ -101,6 +101,7 @@ exports.sharedProfileData = async function (req,res,next) {
         isFollowing = await Follow.isFollowing(req.profileUser._id , req.visitorId)
     } 
 
+    // console.log(getFollower)
     req.getFollower = getFollower
     req.getFollowing = getFollowing
     req.isVisitorProfile = isVisitorProfile
