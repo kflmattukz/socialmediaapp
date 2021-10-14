@@ -1,7 +1,8 @@
 module.exports = {
-  // mode: 'jit',
+  mode: 'jit',
   purge: [
-    // './views/**/*.ejs',
+    './views/**/*.ejs',
+    './frondend-js/**/*.js',
   ],
   darkMode: false, // or 'media' or 'class'
   theme: {

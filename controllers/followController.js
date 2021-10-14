@@ -36,7 +36,7 @@ exports.unFollow = function (req,res) {
      } )
 }
 
-exports.checkFollow = function (req,res , next) {
+exports.checkFollow = function (req, res, next) {
     let follow = new Follow(req.user.username)
     follow.checkFollow().then(() => {
         next()

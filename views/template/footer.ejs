@@ -2,7 +2,14 @@
 <footer class="text-center text-gray-600 text-sm py-3 border-t border-gray-600 border-opacity-30 mt-10">
     &copy; Copyright <span class="font-semibold text-gray-700">kflmattukz@nosferatu</span> 2021 vegapunk.inc , All right reserved.
 </footer>
+
+<% if (user) { %>
+    <div id="chat-root"></div>
+    <script src="/socket.io/socket.io.js"></script>
+<% } %>
+
 <script src="/js/main-bundled.js"></script>
+
 <script>
     const dropdown = document.querySelector('#dropdown');
     const dropdownMenu = document.querySelector('#dropdown-menu');
@@ -23,7 +30,8 @@
                 regFlash.classList.toggle('hidden');
             }
         }
-    }, 1000 * 3)
+    }, 1000 * 2)
+
 
 </script>
 

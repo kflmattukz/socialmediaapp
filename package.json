@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon db --ignore frondend-js --ignore public/ & webpack --watch",
-    "build:css": "npx tailwindcss -i ./src/css/tailwind.css -o ./public/css/tailwind.css"
+    "dev": "nodemon db --ignore frondend-js --ignore public/ & webpack --watch & npx tailwindcss -i ./src/css/tailwind.css -o ./public/css/tailwind.css --watch",
+    "build:css": "npx tailwindcss -i ./src/css/tailwind.css -o ./public/css/tailwind.css --minify"
   },
   "keywords": [],
   "author": "",
@@ -27,6 +27,7 @@
     "md5": "^2.3.0",
     "mongodb": "^4.1.1",
     "sanitize-html": "^2.5.0",
+    "socket.io": "^4.2.0",
     "validator": "^13.6.0",
     "webpack": "^5.52.1",
     "webpack-cli": "^4.8.0"
