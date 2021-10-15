@@ -28,19 +28,19 @@
                     </div>
                     
                     <!-- REGISTER FORM -->
-                    <form action="/register" method="POST">
+                    <form action="/register" method="POST" id="registration-form">
                         <div class="flex flex-col gap-3 w-full">
                             <div class="flex flex-col">
                                 <label for="username" class="text-gray-600 font-medium text-sm">Username</label>
-                                <input class="input-field" type="text" name="username" placeholder="Username" autocomplete="off">
+                                <input class="input-field" id="usernameReg" type="text" name="username" placeholder="Username" autocomplete="off">
                             </div>
                             <div class="flex flex-col">
                                 <label for="email" class="text-gray-600 font-medium text-sm">Email</label>
-                                <input class="input-field" type="email" name="email" placeholder="you@email.com"  autocomplete="off">
+                                <input class="input-field" id="emailReg" type="email" name="email" placeholder="you@email.com"  autocomplete="off">
                             </div>
                             <div class="flex flex-col">
                                 <label for="password" class="text-gray-600 font-medium text-sm">Password</label>
-                                <input class="input-field" type="password" name="password" placeholder="Your strong Password" autocomplete="off">
+                                <input class="input-field" id="passwordReg" type="password" name="password" placeholder="Your strong Password" autocomplete="off">
                             </div>
                             <button class="btn text-base py-3 font-semibold bg-green-600 hover:bg-green-500 transition ease-in text-white shadow" type="submit">Register</button>
                         </div>
