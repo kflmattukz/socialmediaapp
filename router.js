@@ -9,6 +9,8 @@ router.get('/' , userController.home);
 router.post('/login' , userController.login);
 router.get('/logout' , userController.logout);
 router.post('/register', userController.register);
+router.post('/isUserExist_' , userController.isUserExist_);
+router.post('/isEmailExist' , userController.isEmailExist);
 
 //Profile router
 router.get('/profile/:username' , userController.isUserExist , userController.sharedProfileData, userController.viewProfile);

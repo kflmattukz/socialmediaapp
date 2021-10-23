@@ -1,33 +1,88 @@
+import axios from "axios"
+
 export default class registrationForm {
     constructor() {
+        this.formSignup = document.querySelector('#registration-form');
         this.inputFields = document.querySelectorAll('#registration-form .input-field')
         this.username = document.querySelector('#usernameReg')
+        this.username.previousValue = ""
         this.email = document.querySelector('#emailReg')
+        this.email.previousValue = ""
         this.password = document.querySelector('#passwordReg')
+        this.password.previousValue = ""
+        this.username.isUnique = false
+        this.email.isUnique = false
         this.errorMsg()
         this.event();
     }
 
     //EVENTS
     event() {
-        this.username.addEventListener('keyup' , () => this.usernameHandler() )
-        this.email.addEventListener('keyup' , () => this.emailHandler() )
+        this.formSignup.addEventListener('submit' , e => {
+            e.preventDefault()
+            this.formSubmitHandler()
+        })
+        this.username.addEventListener('keyup' , () => this.isDifferent(this.username , this.usernameHandler))
+        this.email.addEventListener('keyup' , () => this.isDifferent(this.email , this.emailHandler))
+        this.password.addEventListener('keyup' , () => this.isDifferent(this.password , this.passwordHandler))
+
+        //BLUER EVENT
+        this.username.addEventListener('blur' , () => this.isDifferent(this.username , this.usernameHandler))
+        this.email.addEventListener('blur' , () => this.isDifferent(this.email , this.emailHandler))
+        this.password.addEventListener('blur' , () => this.isDifferent(this.password , this.passwordHandler))
     }
 
     //METHODS
+    formSubmitHandler() {
+        this.usernameValidateImmedietly()
+        this.usernameValidateWait()
+        this.emailValidateWait()
+        this.passwordValidateImmedietly()
+        this.passwordValidateWait()
+
+        if (this.username.isUnique && 
+            !this.username.errors &&
+            this.email.isUnique &&
+            !this.email.errors &&
+            !this.password.errors) {
+                this.formSignup.submit()
+            }
+    }
+
+    isDifferent(el, handler) {
+        if (el.previousValue != el.value) {
+            handler.call(this)
+        }
+        el.previousValue = el.value;
+    }
+
     emailHandler() {
         this.email.errors = false
-        this.emailValidateImmedietly(this.email)
         if (this.email.timer) { clearTimeout(this.email.timer) }
         this.email.timer = setTimeout( () => this.emailValidateWait(this.email), 800 )
     }
 
-    emailValidateImmedietly() {
-        
-    }
-
     emailValidateWait() {
+        if (!/^\S+@\S+$/.test(this.email.value)) {
+            this.showError(this.email , 'please input a valid email address');
+        }
 
+        if ( !this.email.errors ) {
+            // this.hideError(this.email)
+            axios.post('/isEmailExist' , { email: this.email.value } )
+            .then( responses => {
+                if ( responses.data ) {
+                    this.showError(this.email , 'email already been used , please try another email')
+                    this.email.isUnique = false
+                } else {
+                    this.email.isUnique = true
+                    this.hideError(this.email)
+                }
+            } )
+            .catch( () => {
+                console.log('something went wrong , please try again later');
+            })
+        }
     }
 
     usernameHandler() {
@@ -37,8 +92,31 @@ export default class registrationForm {
         this.username.timer = setTimeout( () => this.usernameValidateWait(this.username), 800 )
     }
 
+    passwordHandler() {
+        this.password.errors = false
+        this.passwordValidateImmedietly(this.password)
+        if (this.password.timer) { clearTimeout(this.password.timer) }
+        this.password.timer = setTimeout( () => this.passwordValidateWait(this.password), 800 )
+    }
+
+    passwordValidateImmedietly() {
+        if ( this.password.value.length > 50) {
+            this.showError(this.password , "password can't exceed 50 characters.")
+        }
+
+        if (!this.password.errors) {
+            this.hideError(this.password)
+        }
+    }
+
+    passwordValidateWait() {
+        if ( this.password.value.length < 6 ) {
+            this.showError(this.password , "password must be atleast 6 characters.")
+        }
+    }
+
     usernameValidateImmedietly(el) {
-        if ( this.username.value != "" && !/^([a-zA-Z0-9]+)$/.test(this.username.value)) {
+        if ( this.username.value == "" && !/^([a-zA-Z0-9]+)$/.test(this.username.value)) {
             this.showError(this.username , 'Username can only contains letters & numbers')
         }
 
@@ -68,6 +146,21 @@ export default class registrationForm {
     usernameValidateWait(el) {
         if ( this.username.value != "" && this.username.value.length < 3 ) {
             this.showError(this.username , "Username must be atleast 3 characters")
+        }
+
+        if ( !this.username.errors ) {
+            axios.post('/isUserExist_' , { username: this.username.value } )
+            .then( responses => {
+                if ( responses.data ) {
+                    console.log(responses.data)
+                    this.showError(this.username , 'Username Already taken, please type another username')
+                    this.username.isUnique = false
+                } else {
+                    this.username.isUnique = true
+                }
+            } ).catch ( () => {
+                console.log('some error accure ,please try again later')
+            } )
         }
     }
 

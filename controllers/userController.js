@@ -72,7 +72,19 @@ exports.isUserExist = function (req,res ,next) {
     }).catch(() => {
         res.render('404')
     })
-    
+}
+
+exports.isUserExist_ = function (req,res) {
+    User.findByUsername(req.body.username).then( () => {
+        res.json(true);
+    }).catch(() => {
+        res.json(false);
+    })
+}
+
+exports.isEmailExist = async function (req,res) {
+    let emailBool = await User.isEmailExist(req.body.email)
+    res.json(emailBool)
 }
 
 exports.viewProfile = function (req,res) { 
