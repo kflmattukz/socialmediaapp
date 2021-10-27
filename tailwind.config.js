@@ -2,7 +2,7 @@ module.exports = {
   mode: 'jit',
   purge: [
     './views/**/*.ejs',
-    './frondend-js/**/*.js',
+    './frontend-js/**/*.js',
   ],
   darkMode: false, // or 'media' or 'class'
   theme: {
