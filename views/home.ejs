@@ -42,6 +42,7 @@
                                 <label for="password" class="text-gray-600 font-medium text-sm">Password</label>
                                 <input class="input-field" id="passwordReg" type="password" name="password" placeholder="Your strong Password" autocomplete="off">
                             </div>
+                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                             <button class="btn text-base py-3 font-semibold bg-green-600 hover:bg-green-500 transition ease-in text-white shadow" type="submit">Register</button>
                         </div>
                     </form>

@@ -13,6 +13,7 @@ export default class Search {
         this.resultRoot = document.querySelector('.result');
         this.previousValue = '';
         this.timerWaiting;
+        this._csrf = document.querySelector('[name="_csrf"]').value
         this.event();
     }
 
@@ -68,7 +69,7 @@ export default class Search {
 
     showResult() {
         this.resultRoot.innerHTML = ''
-        axios.post('/search' , { searchTerm: this.inputSearch.value })
+        axios.post('/search' , { searchTerm: this.inputSearch.value , _csrf : this._csrf })
         .then( response => {
             this.hideLoadingAnimate();
             this.resultRoot.insertAdjacentHTML('beforeend', searchResult(response.data));

@@ -12,6 +12,7 @@
                 <label for="content" class="mb-2 font-semibold">Content</label>
                 <textarea name="content" id="content" cols="30" rows="10" class="flex-auto rounded-lg shadow text-lg px-3 py-2 outline-none focus:ring ring-blue-500 ring-opacity-50 border border-gray-500 border-opacity-25"></textarea>
             </div>
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
             <div>
                 <button type="submit" class="px-10 py-2 bg-green-500 text-white shadow rounded-lg border border-green-600 font-semibold">Save new post</button>
             </div>

@@ -8,9 +8,15 @@
             <div class="text-4xl font-medium text-gray-700 tracking-tight"><%= profile.username %></div>
             <% if ( profile._id && !isVisitorProfile ) { %>
                 <% if (isFollowing) { %>
-                    <a href="/unfollow/<%= profile.username %>" class="bg-red-500 py-2 px-3 font-semibold text-white tracking-wider hover:bg-red-600 rounded shadow-md">Unfollow&nbsp;+</a>
+                    <form action="/unfollow/<%= profile.username %>" method="post">
+                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                        <button class="bg-red-500 py-2 px-3 font-semibold text-white tracking-wider hover:bg-red-600 rounded shadow-md">Unfollow&nbsp;+</button>
+                    </form>
                 <% } else { %>
-                    <a href="/follow/<%= profile.username %>" class="bg-blue-500 py-2 px-3 font-semibold text-white tracking-wider hover:bg-blue-600 rounded shadow-md">Follow&nbsp;+</a>
+                    <form action="/follow/<%= profile.username %>" method="post">
+                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                        <button class="bg-blue-500 py-2 px-3 font-semibold text-white tracking-wider hover:bg-blue-600 rounded shadow-md">Follow&nbsp;+</button>
+                    </form>
                 <% } %>
             <% } %>
         </div>

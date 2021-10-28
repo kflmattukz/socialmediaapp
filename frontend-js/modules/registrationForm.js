@@ -12,6 +12,7 @@ export default class registrationForm {
         this.password.previousValue = ""
         this.username.isUnique = false
         this.email.isUnique = false
+        this._csrf = document.querySelector('[name="_csrf"]').value
         this.errorMsg()
         this.event();
     }
@@ -69,7 +70,7 @@ export default class registrationForm {
 
         if ( !this.email.errors ) {
             // this.hideError(this.email)
-            axios.post('/isEmailExist' , { email: this.email.value } )
+            axios.post('/isEmailExist' , { email: this.email.value , _csrf : this._csrf } )
             .then( responses => {
                 if ( responses.data ) {
                     this.showError(this.email , 'email already been used , please try another email')
@@ -149,7 +150,7 @@ export default class registrationForm {
         }
 
         if ( !this.username.errors ) {
-            axios.post('/isUserExist_' , { username: this.username.value } )
+            axios.post('/isUserExist_' , { username: this.username.value , _csrf : this._csrf } )
             .then( responses => {
                 if ( responses.data ) {
                     console.log(responses.data)

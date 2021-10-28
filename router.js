@@ -7,7 +7,7 @@ const followController = require('./controllers/followController');
 //USERS route
 router.get('/' , userController.home);
 router.post('/login' , userController.login);
-router.get('/logout' , userController.logout);
+router.post('/logout' , userController.logout);
 router.post('/register', userController.register);
 router.post('/isUserExist_' , userController.isUserExist_);
 router.post('/isEmailExist' , userController.isEmailExist);
@@ -21,13 +21,13 @@ router.post('/create-post' , userController.isUserLogin ,postController.create);
 router.get('/post/:id' , postController.viewSingle);
 router.get('/post/:id/edit' ,userController.isUserLogin ,  postController.viewEdit);
 router.post('/post/:id/edit' , userController.isUserLogin ,  postController.update);
-router.get('/post/:id/delete' ,userController.isUserLogin ,  postController.delete);
+router.post('/post/:id/delete' ,userController.isUserLogin ,  postController.delete);
 
 router.post('/search', postController.search);
 
 //Follow router
-router.get('/follow/:username' , userController.isUserLogin , followController.addFollow);
-router.get('/unfollow/:username' , userController.isUserLogin , followController.unFollow);
+router.post('/follow/:username' , userController.isUserLogin , followController.addFollow);
+router.post('/unfollow/:username' , userController.isUserLogin , followController.unFollow);
 
 
 module.exports = router;
