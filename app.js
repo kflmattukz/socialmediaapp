@@ -19,7 +19,6 @@ const sessionOptions = session({
 
 const app = express();
 const router = require('./router');
-// const { ObjectId } = require('bson');
 
 app.use(sessionOptions);
 app.use(flash());

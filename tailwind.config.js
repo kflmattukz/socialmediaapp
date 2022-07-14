@@ -1,5 +1,4 @@
 module.exports = {
-  mode: 'jit',
   purge: [
     './views/**/*.ejs',
     './frontend-js/**/*.js',
