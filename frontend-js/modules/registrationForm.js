@@ -136,7 +136,6 @@ export default class registrationForm {
     }
 
     showError(el , errMsg) {
-        
         el.previousElementSibling.innerHTML = errMsg
         el.previousElementSibling.classList.remove('hidden')
         el.previousElementSibling.classList.remove('-translate-y-6')

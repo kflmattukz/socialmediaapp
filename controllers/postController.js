@@ -34,7 +34,7 @@ exports.update = function (req,res) {
         if (status === "success") {
             req.flash('success' , 'Post update success.')
             req.session.save(function () {
-                res.redirect(`/post/${ req.params.id }/edit`)
+                res.redirect(`/post/${ req.params.id }`)
             })
         } else {
             post.errors.forEach((err) => {
