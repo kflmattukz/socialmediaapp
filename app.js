@@ -69,9 +69,7 @@ app.use(function(err , req, res , next) {
 })
 
 const server = require('http').createServer(app)
-
 const io = require('socket.io')(server)
-
 io.on('connection' , function (socket) {
     socket.on('chatMsgFromBrowser' , function(data) {
         console.log(`msg from server ${ data.message }`)

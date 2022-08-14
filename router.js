@@ -1,5 +1,4 @@
-const express = require('express');
-const router = express.Router();
+const router = require('express').Router();
 const userController = require('./controllers/userController');
 const postController = require('./controllers/postController');
 const followController = require('./controllers/followController');
@@ -28,6 +27,5 @@ router.post('/search', postController.search);
 //Follow router
 router.post('/follow/:username' , userController.isUserLogin , followController.addFollow);
 router.post('/unfollow/:username' , userController.isUserLogin , followController.unFollow);
-
 
 module.exports = router;
